@@ -28,7 +28,7 @@ const useChat = () => {
 
   const patchChat = useCallback(
     (id, fn) => commit((list) => list.map((c) => (c.id === id ? fn(c) : c))),
-    [commit]
+    [commit],
   );
 
   const selectChat = (id) => {
@@ -80,14 +80,16 @@ const useChat = () => {
         patchChat(id, (c) => ({ ...c, messages: c.messages.slice(0, -1) }));
 
       try {
-        const messages = chatsRef.current.find((c) => c.id === id)?.messages ?? [];
+        const messages =
+          chatsRef.current.find((c) => c.id === id)?.messages ?? [];
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ messages: slimHistory(messages) }),
           signal: controller.signal,
         });
-        if (!res.ok) throw new Error((await res.text()) || "Server error " + res.status);
+        if (!res.ok)
+          throw new Error((await res.text()) || "Server error " + res.status);
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
@@ -126,7 +128,11 @@ const useChat = () => {
           setStream(null);
         } else {
           dropLastUser();
-          setStream({ chatId: id, raw: "", error: { type: "error", message: err.message } });
+          setStream({
+            chatId: id,
+            raw: "",
+            error: { type: "error", message: err.message },
+          });
         }
       } finally {
         closed = true;
@@ -136,7 +142,7 @@ const useChat = () => {
         setBusy(false);
       }
     },
-    [patchChat]
+    [patchChat],
   );
 
   const send = useCallback(
@@ -153,7 +159,10 @@ const useChat = () => {
       if (!id) {
         id = Date.now().toString(36);
         const title = text.replace(/\s+/g, " ").slice(0, 42) || "Image";
-        commit((list) => [{ id, title, messages: [msg], ts: Date.now() }, ...list]);
+        commit((list) => [
+          { id, title, messages: [msg], ts: Date.now() },
+          ...list,
+        ]);
         selectChat(id);
       } else {
         patchChat(id, (c) => ({ ...c, messages: [...c.messages, msg] }));
@@ -162,7 +171,7 @@ const useChat = () => {
       setScrollTick((t) => t + 1);
       run(id);
     },
-    [commit, patchChat, run]
+    [commit, patchChat, run],
   );
 
   const stop = useCallback(() => ctrlRef.current?.abort(), []);
@@ -171,7 +180,9 @@ const useChat = () => {
     const id = curIdRef.current;
     if (busyRef.current || !id) return;
     patchChat(id, (c) =>
-      c.messages.at(-1)?.role === "assistant" ? { ...c, messages: c.messages.slice(0, -1) } : c
+      c.messages.at(-1)?.role === "assistant"
+        ? { ...c, messages: c.messages.slice(0, -1) }
+        : c,
     );
     setScrollTick((t) => t + 1);
     run(id);
@@ -197,7 +208,7 @@ const useChat = () => {
       commit((list) => list.filter((c) => c.id !== id));
       if (curIdRef.current === id) newChat();
     },
-    [commit, newChat]
+    [commit, newChat],
   );
 
   const clearAll = useCallback(() => {
