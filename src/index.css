@@ -1,0 +1,648 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./css/Poppins/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("./css/Poppins/Poppins-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%;
+}
+#root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+body {
+  font-family: "Poppins";
+  background: #07090e;
+  color: #f1f5f9;
+  overflow: hidden;
+}
+
+.glass-panel {
+  background: rgba(13, 17, 26, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+.glass-input {
+  background: rgba(19, 25, 38, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-input:focus-within {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+.glass-input.drag {
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
+}
+.glass-button {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.4);
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #10b981 0%, #38bdf8 50%, #10b981 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 4s linear infinite;
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Scroll-to-bottom button */
+.scroll-bottom {
+  position: absolute;
+  right: 1rem;
+  top: -3.25rem;
+  z-index: 30;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 17, 26, 0.85);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 16px rgba(16, 185, 129, 0.15);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s,
+    border-color 0.2s;
+}
+.scroll-bottom.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.scroll-bottom:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.7);
+}
+.scroll-bottom:active {
+  transform: translateY(0) scale(0.94);
+}
+@media (min-width: 768px) {
+  .scroll-bottom {
+    right: 2rem;
+  }
+}
+
+/* Markdown output */
+.md {
+  line-height: 1.75;
+  word-break: break-word;
+}
+.md > *:first-child {
+  margin-top: 0;
+}
+.md > *:last-child {
+  margin-bottom: 0;
+}
+.md p {
+  margin: 0 0 0.75rem;
+}
+.md h3,
+.md h4 {
+  color: #fff;
+  font-weight: 700;
+  margin: 1.1rem 0 0.5rem;
+  line-height: 1.3;
+}
+.md h3 {
+  font-size: 1.05rem;
+}
+.md h4 {
+  font-size: 0.95rem;
+}
+.md ul,
+.md ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.4rem;
+}
+.md ul {
+  list-style: disc;
+}
+.md ol {
+  list-style: decimal;
+}
+.md li {
+  margin: 0.25rem 0;
+}
+.md li::marker {
+  color: #34d399;
+}
+.md strong {
+  color: #fff;
+  font-weight: 600;
+}
+.md a {
+  color: #38bdf8;
+  text-underline-offset: 3px;
+  text-decoration: underline;
+}
+.md code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  background: #1e293b;
+  color: #6ee7b7;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+}
+.md .code {
+  margin: 0.5rem 0 1rem;
+  border-radius: 0.85rem;
+  background: #05070b;
+  border: 1px solid #1e293b;
+  overflow: hidden;
+}
+.md .code-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.5rem 0.35rem 0.8rem;
+  background: #0d111a;
+  border-bottom: 1px solid #1e293b;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #94a3b8;
+}
+.md .code-h button {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.5rem;
+  color: #94a3b8;
+}
+.md .code-h button:hover {
+  color: #34d399;
+  background: rgba(255, 255, 255, 0.05);
+}
+.md .code pre {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+}
+.md .code pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #a7f3d0;
+}
+.md .tbl {
+  margin: 0.5rem 0 1rem;
+  overflow-x: auto;
+  border: 1px solid #1e293b;
+  border-radius: 0.85rem;
+}
+.md table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.md th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  background: #0d111a;
+  color: #6ee7b7;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1px solid #1e293b;
+}
+.md td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: top;
+}
+.md tr:last-child td {
+  border-bottom: none;
+}
+.md tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.md h3 {
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.aqr-img {
+  max-width: 100%;
+  max-height: 360px;
+  border-radius: 8px;
+  margin: 6px 8px 6px 0;
+  display: inline-block;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  cursor: zoom-in;
+}
+
+/* Image attach: preview sebelum kirim + thumbnail di bubble user */
+.pv {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 0.65rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+.pv img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pv .img-x {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+.pv .img-x:hover {
+  background: #e11d48;
+}
+.u-thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(2, 6, 23, 0.25);
+}
+
+/* Thinking block */
+details.think {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 0.85rem;
+  background: rgba(13, 17, 26, 0.5);
+  overflow: hidden;
+}
+details.think summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.5rem 0.85rem;
+  font-size: 12px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  user-select: none;
+}
+details.think summary::-webkit-details-marker {
+  display: none;
+}
+details.think summary::after {
+  content: "";
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+details.think[open] summary::after {
+  transform: rotate(-135deg);
+}
+details.think .t {
+  padding: 0.25rem 0.85rem 0.85rem;
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.spin {
+  width: 11px;
+  height: 11px;
+  border: 2px solid rgba(16, 185, 129, 0.25);
+  border-top-color: #10b981;
+  border-radius: 50%;
+  animation: sp 0.8s linear infinite;
+}
+@keyframes sp {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   THEME TOGGLE + LIGHT MODE OVERRIDES
+   (dark = tampilan asli, light = override di bawah ini)
+   ========================================================= */
+html.dark {
+  color-scheme: dark;
+}
+html.light {
+  color-scheme: light;
+}
+
+html.light .ico-sun {
+  display: none;
+}
+html:not(.light) .ico-moon {
+  display: none;
+}
+
+html.light body {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+html.light #ambient {
+  opacity: 0.55;
+}
+html.light .ambient-dots {
+  background-image: radial-gradient(
+    rgba(15, 23, 42, 0.07) 1px,
+    transparent 1px
+  );
+}
+html.light ::selection {
+  background: rgba(16, 185, 129, 0.25);
+  color: #065f46;
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+html.light .glass-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+}
+html.light .glass-input:focus-within {
+  border-color: rgba(16, 185, 129, 0.55);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+html.light .glass-input.drag {
+  border-color: rgba(2, 132, 199, 0.8);
+  box-shadow: 0 0 24px rgba(2, 132, 199, 0.2);
+}
+html.light .glass-button {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+html.light .glass-button:hover {
+  background: rgba(15, 23, 42, 0.07);
+  border-color: rgba(15, 23, 42, 0.18);
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+}
+
+html.light .scroll-bottom {
+  background: rgba(255, 255, 255, 0.95);
+  color: #059669;
+  border: 1px solid rgba(5, 150, 105, 0.35);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+}
+html.light .scroll-bottom:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(5, 150, 105, 0.7);
+}
+
+html.light #sidebar {
+  background: rgba(255, 255, 255, 0.94);
+}
+html.light header {
+  background: rgba(255, 255, 255, 0.75);
+}
+html.light .border-dark-border {
+  border-color: rgba(15, 23, 42, 0.1);
+}
+html.light .bg-dark-card {
+  background-color: #ffffff;
+}
+html.light .bg-dark-card\/60 {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+html.light .border-white\/10 {
+  border-color: rgba(15, 23, 42, 0.1);
+}
+html.light .border-white\/5 {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+html.light .bg-slate-900\/80 {
+  background-color: #ffffff;
+}
+html.light .border-slate-800 {
+  border-color: rgba(15, 23, 42, 0.12);
+}
+html.light .border-slate-700 {
+  border-color: #cbd5e1;
+}
+html.light .border-slate-700\/50 {
+  border-color: rgba(15, 23, 42, 0.12);
+}
+html.light .bg-slate-800 {
+  background-color: #e2e8f0;
+}
+html.light .bg-slate-800\/60 {
+  background-color: #e2e8f0;
+}
+html.light .hover\:bg-slate-800\/30:hover {
+  background-color: rgba(15, 23, 42, 0.05);
+}
+html.light .hover\:bg-slate-800\/50:hover {
+  background-color: rgba(15, 23, 42, 0.05);
+}
+html.light .hover\:bg-slate-800\/60:hover {
+  background-color: rgba(15, 23, 42, 0.07);
+}
+
+html.light .text-white,
+html.light .text-slate-100,
+html.light .text-slate-200 {
+  color: #0f172a;
+}
+html.light .text-slate-300 {
+  color: #334155;
+}
+html.light .text-slate-400,
+html.light .text-slate-500 {
+  color: #64748b;
+}
+html.light .text-slate-600 {
+  color: #94a3b8;
+}
+html.light .text-slate-950 {
+  color: #020617;
+}
+html.light .placeholder-slate-500::placeholder {
+  color: #94a3b8;
+}
+html.light .hover\:text-white:hover,
+html.light .hover\:text-slate-200:hover,
+html.light .hover\:text-slate-300:hover {
+  color: #0f172a;
+}
+html.light .text-brand-400 {
+  color: #059669;
+}
+html.light .text-emerald-400 {
+  color: #059669;
+}
+html.light .text-accent-400 {
+  color: #0284c7;
+}
+html.light .text-indigo-400 {
+  color: #4f46e5;
+}
+html.light .text-rose-400 {
+  color: #e11d48;
+}
+html.light .text-amber-400 {
+  color: #d97706;
+}
+html.light .hover\:text-brand-400:hover {
+  color: #059669;
+}
+html.light .hover\:text-rose-400:hover {
+  color: #e11d48;
+}
+
+html.light .md h3,
+html.light .md h4 {
+  color: #0f172a;
+}
+html.light .md h3 {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+}
+html.light .md strong {
+  color: #0f172a;
+}
+html.light .md a {
+  color: #0284c7;
+}
+html.light .md li::marker {
+  color: #059669;
+}
+html.light .md code {
+  background: #e2e8f0;
+  color: #047857;
+}
+html.light .md .code {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+html.light .md .code-h {
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  color: #475569;
+}
+html.light .md .code-h button {
+  color: #475569;
+}
+html.light .md .code-h button:hover {
+  color: #059669;
+  background: rgba(15, 23, 42, 0.05);
+}
+html.light .md .code pre code {
+  background: none;
+  color: #065f46;
+}
+html.light .md .tbl {
+  border: 1px solid #e2e8f0;
+}
+html.light .md th {
+  background: #f1f5f9;
+  color: #047857;
+  border-bottom: 1px solid #e2e8f0;
+}
+html.light .md td {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+}
+html.light .md tbody tr:hover {
+  background: rgba(15, 23, 42, 0.03);
+}
+html.light .aqr-img {
+  border: 1px solid rgba(15, 23, 42, 0.15);
+}
+html.light .pv {
+  border: 1px solid rgba(15, 23, 42, 0.18);
+}
+
+html.light details.think {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+}
+html.light details.think summary {
+  color: #475569;
+}
+html.light details.think .t {
+  color: #64748b;
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" class="h-full dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoBot AI || IK Engineering</title>
+
+    <!-- Theme init (sebelum render, supaya tidak kedip). Key: ecobot_theme -->
+    <script>
+      (function () {
+        var t = "light";
+        try {
+          t = localStorage.getItem("ecobot_theme") || "light";
+        } catch (e) {}
+        var r = document.documentElement;
+        r.classList.toggle("dark", t !== "light");
+        r.classList.toggle("light", t === "light");
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="h-full flex text-slate-200 antialiased selection:bg-brand-500/30 selection:text-brand-400"
+  >
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
