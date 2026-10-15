@@ -26,6 +26,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../store/auth";
+import logo from "../../images/logo.png";
 
 /* ───────── Helpers ───────── */
 const GREETING = {
@@ -992,7 +993,7 @@ function Visual({ mode, reduced, onWave, pageRef, eyesLocked }) {
       </div>
 
       <Floating
-        className="right-5 top-6"
+        className="right-5 top-[85%]"
         constraintsRef={pageRef}
         reduced={reduced}
       >
@@ -1002,12 +1003,14 @@ function Visual({ mode, reduced, onWave, pageRef, eyesLocked }) {
         </div>
       </Floating>
       <Floating
-        className="left-5 top-1/2"
+        className="left-5 top-[85%]"
         constraintsRef={pageRef}
         delay={1.2}
         reduced={reduced}
       >
-        {/* <div className={chip}>Ready to assist</div> */}
+        <div className={`${chip} w-44`}>
+          <img src={logo} alt="logo-image" className="w-full" />
+        </div>
       </Floating>
     </div>
   );
