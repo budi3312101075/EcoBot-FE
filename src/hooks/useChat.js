@@ -11,6 +11,7 @@ import {
 } from "../utils/chatApi";
 import { slimHistory } from "../utils/chatHistory";
 import { parseThink } from "../utils/markdown";
+import { generateUUID } from "../utils/utils";
 
 const useChat = () => {
   const chatsRef = useRef([]);
@@ -221,7 +222,7 @@ const useChat = () => {
 
       let id = curIdRef.current;
       if (!id) {
-        id = crypto.randomUUID();
+        id = generateUUID();
         const title = text.replace(/\s+/g, " ").slice(0, 42) || "Image";
         commit((list) => [
           { id, title, messages: [msg], ts: Date.now() },
